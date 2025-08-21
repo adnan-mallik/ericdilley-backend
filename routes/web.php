@@ -22,11 +22,17 @@ Route::get('/register',function () {
 });
     Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
     Route::get('/testimonials/create', [TestimonialController::class, 'create'])->name('testimonials.create')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-    Route::post('/testimonials/{id}', [TestimonialController::class, 'edit'])->name('testimonials.edit')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-    Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-    Route::post('/testimonials/{id}', [TestimonialController::class, 'update'])->name('testimonials.update')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::get('/testimonials/{id}', [TestimonialController::class, 'edit'])->name('testimonials.edit');
+    Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
+    Route::put('/testimonials/{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
     Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);  
     
+    Route::get('/blog', [ResourceController::class, 'index'])->name('blog.index')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::get('/blog/create', [ResourceController::class, 'create'])->name('blog.create')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::post('/blog/create', [ResourceController::class, 'store'])->name('blog.store')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::get('/blog/{id}/edit', [ResourceController::class, 'edit'])->name('blog.edit')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::put('/blog/{id}', [ResourceController::class, 'update'])->name('blog.update')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::delete('/blog/{id}', [ResourceController::class, 'destroy'])->name('blog.destroy')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
     
 
 Route::middleware(['auth'])->group(function () {
@@ -45,12 +51,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/speaking-engagement', [SpeakingRequestController::class, 'show'])->name('speaking.show');
     
     
-    Route::get('/blog', [ResourceController::class, 'index'])->name('blog.index');
-    Route::get('/blog/create', [ResourceController::class, 'create'])->name('blog.create');
-    Route::post('/blog/create', [ResourceController::class, 'store'])->name('blog.store');
-    Route::get('/blog/{id}/edit', [ResourceController::class, 'edit'])->name('blog.edit');
-    Route::put('/blog/{id}', [ResourceController::class, 'update'])->name('blog.update');
-    Route::delete('/blog/{id}', [ResourceController::class, 'destroy'])->name('blog.destroy');
+    // Route::get('/blog', [ResourceController::class, 'index'])->name('blog.index');
+    // Route::get('/blog/create', [ResourceController::class, 'create'])->name('blog.create');
+    // Route::post('/blog/create', [ResourceController::class, 'store'])->name('blog.store');
+    // Route::get('/blog/{id}/edit', [ResourceController::class, 'edit'])->name('blog.edit');
+    // Route::put('/blog/{id}', [ResourceController::class, 'update'])->name('blog.update');
+    // Route::delete('/blog/{id}', [ResourceController::class, 'destroy'])->name('blog.destroy');
     
     Route::get('/podcasts', [PodCastController::class, 'index'])->name('podcasts.index');
     Route::get('/podcasts/create', [PodCastController::class, 'create'])->name('podcasts.create');

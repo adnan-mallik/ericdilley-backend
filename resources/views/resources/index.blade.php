@@ -28,7 +28,7 @@
                                         <tr>
                                             <td>
                                                 @if($blog->image)
-                                                    <img src="{{ asset('storage/' . $blog->image) }}" alt="Blog Image" style="width: 50px; height: 50px;">
+                                                    <img src="{{asset('images') . '/' . $blog->image}}" alt="Blog Image" style="width: 50px; height: 50px;">
                                                 @else
                                                     No Image
                                                 @endif

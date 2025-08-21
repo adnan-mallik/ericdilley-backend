@@ -42,7 +42,7 @@ class ResourceController extends Controller
             'author' => 'nullable|string|max:255',
             'slug' => 'required|string|unique:blogs,slug|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'published' => 'boolean',
+            // 'published' => 'boolean',
         ],
         [
             'title.required' => 'The title is required.',
@@ -61,24 +61,41 @@ class ResourceController extends Controller
             ], 422);
         }
 
-        // If validation passes, proceed to store the resource
-        $data = $request->only(['title', 'content', 'author', 'slug', 'published']);
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('images', 'public');
+            $image       = $request->file('image');
+            $imageName   = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $imagePath   = 'images/' . $imageName;
+        } else {
+            $imagePath = $model->image; // keep old image if not updating
         }
+
+        // If validation passes, proceed to store the resource
+        // $data = $request->only(['title', 'content', 'author', 'slug', 'image' , 'published']);
+        $data = [
+            'title' => $request->title,
+            'content' => $request->content,
+            'author' => $request->author,
+            'slug' => $request->slug,
+            'image' => $imagePath,
+            'published' => $request->published,
+        ];
+        
 
         if($data['published']):
             $data['published_at'] = now();
         endif;
         
         // Assuming you have a Blog model to handle the database interaction
-        Blog::create($data);
+        $blog = Blog::create($data);
 
 
         // Return a success response
         return response()->json([
             'success' => true,
             'message' => 'Resource created successfully',
+            'data' => $data
         ], 201);
 
     }
