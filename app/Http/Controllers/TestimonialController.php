@@ -120,4 +120,55 @@ class TestimonialController extends Controller
             'message' => 'Testimonial created successfully!'
         ], 201);
     }
+    
+    public function edit($id, Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'name'        => 'required|string|max:255',
+            'designation' => 'required|string|max:255',
+            'message'     => 'required|string|max:1000',
+            'type'        => 'required|string|max:50',
+            'photo'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validate->errors()
+            ], 422);
+        }
+
+        $testimonial = Testimonial::find($id);
+        if (!$testimonial) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Testimonial not found.'
+            ], 404);
+        }
+
+        if ($request->hasFile('photo')) {
+            
+            if ($testimonial->photo && file_exists(public_path($testimonial->photo))) {
+                unlink(public_path($testimonial->photo));
+            }
+
+            $file = $request->file('photo');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/testimonials'), $filename);
+            $testimonial->photo = 'uploads/testimonials/' . $filename;
+        }
+
+        // ✅ Update other fields
+        $testimonial->name = $request->name;
+        $testimonial->designation = $request->designation;
+        $testimonial->message = $request->message;
+        $testimonial->type = $request->type;
+        $testimonial->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Testimonial updated successfully!'
+        ], 200);
+    }
+
 }

@@ -11,7 +11,7 @@
                     </div>
                     <div id="response-message" class="mb-3"></div>
                     <div class="card-body card-block">
-                        <form id="podcastForm" class="form-horizontal">
+                        <form id="podcastForm" class="form-horizontal" enctype="multipart/form-data" method="POST">
                             @csrf
                             <div class="row form-group">
                                 <div class="col col-md-3">
@@ -36,7 +36,7 @@
                                     <label for="thumbnail" class="form-control-label">Thumbnail URL</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="thumbnail" name="thumbnail" class="form-control">
+                                    <input type="file" id="thumbnail" name="thumbnail" class="form-control">
                                     <span class="text-danger" id="error-thumbnail"></span>
                                 </div>
                             </div>

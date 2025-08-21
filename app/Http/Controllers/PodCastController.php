@@ -25,7 +25,7 @@ class PodCastController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:pod_casts,slug',
-            'thumbnail' => 'nullable|string|max:255',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'video_url' => 'required|string|max:255',
             'description' => 'nullable|string',
             'published_at' => 'nullable|date',

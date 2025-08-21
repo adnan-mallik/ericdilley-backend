@@ -20,17 +20,24 @@ Auth::routes();
 Route::get('/register',function () {
     return redirect()->route('login');
 });
-
+    Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::get('/testimonials/create', [TestimonialController::class, 'create'])->name('testimonials.create')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::post('/testimonials/{id}', [TestimonialController::class, 'edit'])->name('testimonials.edit')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::post('/testimonials/{id}', [TestimonialController::class, 'update'])->name('testimonials.update')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+    Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy')->withoutMiddleware([Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);  
+    
+    
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     
-    Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
-    Route::get('/testimonials/create', [TestimonialController::class, 'create'])->name('testimonials.create');
-    Route::get('/testimonials/{id}', [TestimonialController::class, 'edit'])->name('testimonials.edit');
-    Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
-    Route::put('/testimonials/{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
-    Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');  
+    // Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
+    // Route::get('/testimonials/create', [TestimonialController::class, 'create'])->name('testimonials.create');
+    // Route::get('/testimonials/{id}', [TestimonialController::class, 'edit'])->name('testimonials.edit');
+    // Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
+    // Route::put('/testimonials/{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
+    // Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');  
     
     
     Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');

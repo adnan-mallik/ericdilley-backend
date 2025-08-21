@@ -11,7 +11,7 @@
                     </div>
                     <div id="response-message" class="mb-3"></div>
                     <div class="card-body card-block">
-                        <form id="podcastEditForm" class="form-horizontal">
+                        <form id="podcastEditForm" class="form-horizontal" method="post" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row form-group">
@@ -37,7 +37,7 @@
                                     <label for="thumbnail" class="form-control-label">Thumbnail URL</label>
                                 </div>
                                 <div class="col-12 col-md-9">
-                                    <input type="text" id="thumbnail" name="thumbnail" class="form-control" value="{{ $podcast->thumbnail }}">
+                                    <input type="file" id="thumbnail" name="thumbnail" class="form-control" value="{{ $podcast->thumbnail }}">
                                     <span class="text-danger" id="error-thumbnail"></span>
                                 </div>
                             </div>
